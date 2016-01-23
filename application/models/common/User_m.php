@@ -54,6 +54,25 @@ class User_m extends CI_Model
 	}
 
 
+	/**
+	 * 用户登录方法
+	 * 
+	 * @author NJ
+	 * @ctime 2016-1-23 17:27:59
+	 * @param  array $cond 查询条件(用户输入的邮箱和密码)
+	 * @return int       结果数
+	 * 
+	 */
+	public function login($cond)
+	{
+		# code...
+		$query = $this->db->select('*')->from(self::$table_name)->where($cond)->get();
+		$result = $query->num_rows(); // 如果根据邮箱和密码查询到的条数
+		return $result;
+		// $error = $this->db->error(); // 可以打印错误
+	}
+
+
 }
 
 

@@ -8,22 +8,31 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="row col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 			<form action="" class="register-form" method="post">
-				<input name="email" type="text" class="form-control email" placeholder="您的邮箱">
-				<input name="pwd" type="password" class="form-control pwd" placeholder="密码">
-				<input name="pwd-cfm" type="password" class="form-control pwd-cfm" placeholder="密码确认">
-				<input type="button" class="btn btn-primary register-submit" value="注册">
+				<div class="form-group">
+					<input name="email" type="text" class="form-control email" placeholder="您的邮箱">
+				</div>
+				<div class="form-group">
+					<input name="pwd" type="password" class="form-control pwd" placeholder="密码">
+				</div>
+				<div class="form-group">
+					<input name="pwd-cfm" type="password" class="form-control pwd-cfm" placeholder="密码确认">
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-info register-submit col-lg-3 col-lg-offset-4" value="注册">
+				</div>
 			</form>
 		</div>
 	</div>
 
 </div>
 
-<script>
+<script type="text/javascript">
+// 用户点击提交操作
 $('input.register-submit').click(function(){
-	//
-	var email = $('input.email').val();
-	var pwd = $('input.pwd').val();
-	var pwd_cfm = $('input.pwd-cfm').val();
+	// 基本判断
+	var email = $('input.email').val(); // 获取邮箱地址
+	var pwd = $('input.pwd').val(); // 获取第一个密码
+	var pwd_cfm = $('input.pwd-cfm').val(); // 获取确认密码
 	if(email == ''){
 		layer.msg('邮箱不能为空');
 		return false;
@@ -38,11 +47,9 @@ $('input.register-submit').click(function(){
 		return false;
 	};
 	// 获取表单所有的数据
-	// alert('test');
-	// var C = new common;
-	var submitUrl = '<?php echo site_url('entry/register_submit'); ?>';
 	var submitData = $('form.register-form').serialize();
 	var result = common.ajaxRequest(submitUrl, submitData);
+	var submitUrl = '<?php echo site_url('entry/register_submit'); ?>'; // ajax提交用户数据到处理注册的url地址
 	if (result.status==1) {
 		// 注册成功
 		layer.msg(result.msg);

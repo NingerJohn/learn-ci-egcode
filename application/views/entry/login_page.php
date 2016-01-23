@@ -1,0 +1,60 @@
+<div class="container">
+	<div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
+		<div class="row">
+			<h3 class="text-center">
+				<small>
+					<b><?php echo $page_title; ?></b>
+				</small>
+			</h3>
+		</div>
+	</div>
+	<br>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="row col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+			<form action="" class="login-form" method="post">
+				<div class="form-group">
+					<input name="email" type="text" class="form-control email" placeholder="您的邮箱">
+				</div>
+				<div class="form-group">
+					<input name="pwd" type="password" class="form-control pwd" placeholder="密码">
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-info login-btn col-lg-3 col-lg-offset-4" value="登录">
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+
+// 用户点击登录操作
+$('input.login-btn').click(function(){
+	//
+	var email = $('input.email').val();
+	var pwd = $('input.pwd').val();
+	var pwd_cfm = $('input.pwd-cfm').val();
+	if(email == ''){
+		layer.msg('邮箱不能为空');
+		return false;
+	}else if (pwd=='') {
+		layer.msg('密码不能为空');
+		return false;
+	};
+	// 获取表单所有的数据
+	var submitData = $('form.login-form').serialize();
+	var submitUrl = '<?php echo site_url('entry/login_action'); ?>'; // ajax提交到的url地址
+	var result = common.ajaxRequest(submitUrl, submitData);
+	if (result.status==1) {
+		// 登录成功
+		layer.msg(result.msg);
+		return false;
+	} else {
+		// 登录失败
+		layer.msg(result.msg);
+		return false;
+	}
+})
+</script>
+

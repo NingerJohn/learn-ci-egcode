@@ -1,14 +1,21 @@
 <?php
 
 /**
+* 对CI_Controller控制器进行扩展
+* 基本的变量设置，常用方法的声明
+*
+*
 * 
 */
 class MY_Controller extends CI_Controller
 {
 	
+	public $web_title; // 网站的名字（比如百度，腾讯，一般都会显示到title标签里面）
+	
 	function __construct()
 	{
 		parent::__construct();
+		$this->web_title = 'CI学习例子代码';
 	}
 
 	/**

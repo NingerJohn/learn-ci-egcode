@@ -1,7 +1,7 @@
 <?php
 
 /**
-* 
+* 测试控制器
 */
 class Test extends MY_Controller
 {

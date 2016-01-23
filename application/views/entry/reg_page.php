@@ -9,8 +9,8 @@
 		<div class="row col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 			<form action="" class="register-form" method="post">
 				<input name="email" type="text" class="form-control email" placeholder="您的邮箱">
-				<input name="pwd" type="text" class="form-control pwd" placeholder="密码">
-				<input name="pwd-cfm" type="text" class="form-control pwd-cfm" placeholder="密码确认">
+				<input name="pwd" type="password" class="form-control pwd" placeholder="密码">
+				<input name="pwd-cfm" type="password" class="form-control pwd-cfm" placeholder="密码确认">
 				<input type="button" class="btn btn-primary register-submit" value="注册">
 			</form>
 		</div>
@@ -38,10 +38,20 @@ $('input.register-submit').click(function(){
 		return false;
 	};
 	// 获取表单所有的数据
-	var submitData = $('form.register-form').serialize();
-	alert('test');
+	// alert('test');
 	// var C = new common;
-	console.log(common.ajaxRequest('test'));
+	var submitUrl = '<?php echo site_url('entry/register_submit'); ?>';
+	var submitData = $('form.register-form').serialize();
+	var result = common.ajaxRequest(submitUrl, submitData);
+	if (result.status==1) {
+		// 注册成功
+		layer.msg(result.msg);
+		return false;
+	} else {
+		// 注册失败
+		layer.msg(result.msg);
+		return false;
+	}
 })
 </script>
 

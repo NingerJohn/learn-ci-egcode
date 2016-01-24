@@ -518,6 +518,7 @@ $config['proxy_ips'] = '';
 /*
 | -------------------------------------------------------------------
 | Native Auto-load 原生加载，实现 application/core 下面类的自动加载
+| 比如Front_Controller, Back_Controller等等
 | -------------------------------------------------------------------
 | 
 | Nothing to do with config/autoload.php, this allows PHP autoload to work
@@ -526,12 +527,10 @@ $config['proxy_ips'] = '';
 */
 function __autoload($class)
 {
- if(strpos($class, 'CI_') !== 0)
- {
-  // define('EXT','.php');
-  defined('EXT') ? '':define('EXT','.php');
-  // var_dump(EXT);exit;
-  @include_once( APPPATH . 'core/'. $class . EXT );
- }
+	if(strpos($class, 'CI_') !== 0)
+	{
+		defined('EXT') ? '':define('EXT','.php'); // 尝试定义EXT常量（'.php'）
+		@include_once( APPPATH . 'core/'. $class . EXT );
+	}
 }
 

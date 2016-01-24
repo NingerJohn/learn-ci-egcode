@@ -14,7 +14,8 @@ class Front_Controller extends MY_Controller
 	{
 		# code...
 		parent::__construct();
-		echo 'front parent controller';
+		// echo 'front parent controller';
+		// 有些网站限制用户必须登陆了以后才能
 	}
 }
 

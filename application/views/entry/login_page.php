@@ -67,6 +67,10 @@ $('input.login-btn').click(function(){
 	if (result.status==1) {
 		// 登录成功
 		layer.msg(result.msg);
+		setTimeout(function(){
+			// 1.5秒以后，跳转
+			window.location.href = "<?php echo site_url('index/index'); ?>";
+		},1500);
 		return false;
 	} else {
 		// 登录失败

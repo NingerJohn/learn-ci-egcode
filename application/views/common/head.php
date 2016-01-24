@@ -43,11 +43,11 @@ $front_sess = $this->session->front_sess;
 		    </li>
 			<?php if ($front_sess!==NULL): ?>
 				<li class="">
-					<a href="">Logout</a>
+					<a href="<?php echo site_url('index/logout') ?>">Logout</a>
 				</li>
 			<?php else: ?>
 				<li class="">
-					<a href="">Sign in</a>
+					<a href="<?php echo site_url('entry/login') ?>">Sign in</a>
 				</li>	
 			<?php endif ?>
 		  </ul>

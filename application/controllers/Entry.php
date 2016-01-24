@@ -30,9 +30,9 @@ class Entry extends MY_Controller {
 	{
 		$header_data['web_title'] = $this->web_title;
 		$header_data['page_title'] = '注册页面'; // 当前网页的名字，与网站名字不一样
-		$this->load->view('common/header',$header_data); // 头部视图文件
+		$this->load->view('common/head',$header_data); // 头部视图文件
 		$this->load->view('entry/reg_page'); // 注册页面
-		$this->load->view('common/footer'); // 底部视图文件
+		$this->load->view('common/foot'); // 底部视图文件
 	}
 
 	/**
@@ -90,9 +90,9 @@ class Entry extends MY_Controller {
 		// var_dump($this->session->front_user);
 		$header_data['web_title'] = $this->web_title;
 		$header_data['page_title'] = '登陆页面'; // 当前网页的名字，与网站名字不一样
-		$this->load->view('common/header',$header_data); // 头部视图文件
+		$this->load->view('common/head',$header_data); // 头部视图文件
 		$this->load->view('entry/login_page'); // 登陆页面
-		$this->load->view('common/footer'); // 底部视图文件
+		$this->load->view('common/foot'); // 底部视图文件
 	}
 
 	/**

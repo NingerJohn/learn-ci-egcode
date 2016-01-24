@@ -10,7 +10,7 @@
 class MY_Controller extends CI_Controller
 {
 	
-	public $web_title; // 网站的名字（比如百度，腾讯，一般都会显示到title标签里面）
+	public $web_title; // 网站的名字（一般都会显示到title标签里面）
 	
 	function __construct()
 	{
@@ -45,6 +45,27 @@ class MY_Controller extends CI_Controller
 	{
 		return $this->input->get($value);
 	}
+
+	/**
+	 * 简化post获取数据形式
+	 * 
+	 * @author NJ
+	 * @ctime 2016年1月23日16:12:48
+	 * @param  string $value 需要获取的前台数据名
+	 * @return string        返回post数据
+	 * 
+	 */
+	public function redirect($value=NULL)
+	{
+		if ($value===NULL) {
+			$value = 'index/index';
+		}
+		redirect($value);
+	}
+
+
+
+
 
 }
 

@@ -18,7 +18,7 @@
 					<input name="pwd-cfm" type="password" class="form-control pwd-cfm" placeholder="密码确认">
 				</div>
 				<div class="form-group">
-					<input type="button" class="btn btn-info register-submit col-lg-3 col-lg-offset-4" value="注册">
+					<input type="button" class="btn btn-info register-submit col-lg-3 col-lg-offset-4" value="注册" id="btn">
 				</div>
 			</form>
 		</div>
@@ -30,6 +30,8 @@
 // 用户点击提交操作
 $('input.register-submit').click(function(){
 	// 基本判断
+	// console.log($(this));
+	// console.log();
 	var email = $('input.email').val(); // 获取邮箱地址
 	var pwd = $('input.pwd').val(); // 获取第一个密码
 	var pwd_cfm = $('input.pwd-cfm').val(); // 获取确认密码
@@ -46,6 +48,7 @@ $('input.register-submit').click(function(){
 		layer.msg('密码不一致，请确认输入');
 		return false;
 	};
+	console.log('test');
 	// 获取表单所有的数据
 	var submitData = $('form.register-form').serialize();
 	var result = common.ajaxRequest(submitUrl, submitData);

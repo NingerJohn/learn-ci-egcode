@@ -6,11 +6,16 @@ class Entry extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
+		// 用户登陆以后是无法登陆注册的，这里判断session是否为空
+		if ($this->session->front_sess || $this->session->back_sess) {
+			$this->redirect(site_url('index/index'));
+		}
 	}
 
 	public function index()
 	{
 		$this->load->view('entry/index');
+		
 	}
 
 	/**
@@ -44,6 +49,12 @@ class Entry extends MY_Controller {
 		// var_dump($this->post('email'));exit;
 		$this->load->model('common/User_m', 'user_m'); // 加载用户表模型
 		$cond['email'] = trim($this->post('email')); // 获取用户传递过来的邮箱
+		// 邮箱验证，直接使用的是php5.2版本以后提供的内置函数，如果不放心的话，可以加一个正则匹配
+		if(!filter_var($cond['email'],FILTER_VALIDATE_EMAIL)){
+			$fin_res['status'] = 0;
+			$fin_res['msg'] = '邮箱格式不合法';
+			echo json_encode($fin_res);exit;
+		}
 		$mail_check_res = $this->user_m->repeat_check($cond); // 调用用户表模型中的邮箱检重方法
 		if ($mail_check_res > 0) { // 如果数量大于0的话，则说明已注册
 			$fin_res['status'] = 0;
@@ -76,6 +87,7 @@ class Entry extends MY_Controller {
 	 */
 	public function login()
 	{
+		// var_dump($this->session->front_user);
 		$header_data['web_title'] = $this->web_title;
 		$header_data['page_title'] = '登陆页面'; // 当前网页的名字，与网站名字不一样
 		$this->load->view('common/header',$header_data); // 头部视图文件
@@ -104,10 +116,13 @@ class Entry extends MY_Controller {
 			echo json_encode($fin_res);exit;
 		} else {
 			$cond['password'] = md5(trim($this->post('pwd'))); // 获取用户传递过来的邮箱
-			$reg_res = $this->user_m->login($cond);
-			if ($reg_res==1) { // 登录成功
-				// 存入session
-				// 
+			$user_data = $this->user_m->login($cond);
+			// var_dump($user_data);exit;
+			if ($user_data!==NULL) { // 登录成功
+				// 用户数据存入session
+				$this->load->library('session');
+				$sess_arr['front_sess'] = $user_data;
+				$this->session->set_userdata($sess_arr);
 				// 返回登录的结果
 				$fin_res['status'] = 1;
 				$fin_res['msg'] = '登录成功';

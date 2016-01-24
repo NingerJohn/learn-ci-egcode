@@ -1,3 +1,21 @@
+<?php
+// 获取到session数据
+$front_sess = $this->session->front_user;
+
+
+?>
+
+
+
+<?php //var_dump($this->session->front_user); ?>
+
+<?php if ($front_sess==NULL): ?>
+	未登陆
+<?php else: ?>
+	
+<?php endif ?>
+
+
 <div class="container">
 	<div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
 		<div class="row">

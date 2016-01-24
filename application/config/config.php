@@ -512,3 +512,26 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+
+/*
+| -------------------------------------------------------------------
+| Native Auto-load 原生加载，实现 application/core 下面类的自动加载
+| -------------------------------------------------------------------
+| 
+| Nothing to do with config/autoload.php, this allows PHP autoload to work
+| for base controllers and some third-party libraries.
+|
+*/
+function __autoload($class)
+{
+ if(strpos($class, 'CI_') !== 0)
+ {
+  // define('EXT','.php');
+  defined('EXT') ? '':define('EXT','.php');
+  // var_dump(EXT);exit;
+  @include_once( APPPATH . 'core/'. $class . EXT );
+ }
+}
+

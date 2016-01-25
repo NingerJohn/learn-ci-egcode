@@ -22,15 +22,15 @@ $front_sess = $this->session->front_sess;
 <nav class="navbar navbar-default navbar-fixed-top navbar-collapse">
 	<!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
 	<div class="container-fluid">
-		<div class="navbar-header">
+<!-- 		<div class="navbar-header">
 		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6" aria-expanded="false">
 		    <span class="sr-only">Toggle navigation</span>
 		    <span class="icon-bar">One</span>
 		    <span class="icon-bar">Two</span>
 		    <span class="icon-bar">Three</span>
 		  </button>
-		  <!-- <a class="navbar-brand" href="#">Brand</a> -->
-		</div>
+		  <a class="navbar-brand" href="#">Brand</a>
+		</div> -->
 
 		<div class="collapse navbar-collapse">
 		  <ul class="nav navbar-nav">

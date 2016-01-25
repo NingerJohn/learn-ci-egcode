@@ -15,9 +15,6 @@ class Index extends Front_Controller
 	function __construct()
 	{
 		parent::__construct();
-		if ($this->session->front_sess==NULL) {
-			redirect(site_url('entry/login'));
-		}
 	}
 
 	/**

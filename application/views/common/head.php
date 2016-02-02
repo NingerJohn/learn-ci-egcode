@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('/public/common/css/bootstrap.min.css') ?>">
 	<script src="<?php echo base_url('/public/common/js/jquery.min.js'); ?>"></script>
 	<script src="<?php echo base_url('/public/common/js/plugins/layer/layer.js'); ?>"></script>
+	<script src="<?php echo base_url('/public/common/js/ng/angular.min.v1.5.0.js'); ?>"></script>
 	<script src="<?php echo base_url('/public/common/js/common.js'); ?>"></script>
 </head>
 <body>
@@ -58,5 +59,52 @@ $front_sess = $this->session->front_sess;
 	</div>
 </nav>
 
+<div class="col-lg-12">
+	<div class="row">
+		<br>
+		<br>
+		<br>
+		<br>
+	</div>
+</div>
 
+<body ng-app="App">  
+    <div ng-controller="Ctrl">  
+        <table>  
+            <tr>  
+                <td>Product Id :</td>  
+                <td>  
+                    <span ng-bind="Product.id">  
+                    </span>  
+                </td>  
+            </tr>  
+            <tr>  
+                <td>Name :</td>  
+                <td>  
+                    <span ng-bind="Product.name">  
+                    </span>  
+                </td>  
+            </tr>  
+            <tr>  
+                <td>salseman :</td>  
+                <td>  
+                    <span ng-bind="Product.salseman">
+                    </span>  
+                     <!-- <input type="text" ng-model="Product.salseman">   -->
+                </td>  
+            </tr>  
+        </table>  
+    </div>  
+</body>  
+
+
+<script type="text/javascript">
+// 定义App模块
+var app = angular.module('App',[]);
+// 定义App模块下的一个Ctrl控制器
+app.controller('Ctrl',function($scope){
+	var Productsalseman = ['Jessica','Jack'];
+	$scope.Product = {id:'p01',name:'AngularJS Books','salseman':Productsalseman};
+})
+</script>
 

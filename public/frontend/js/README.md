@@ -1,0 +1,1 @@
+JS folder used for all sites

@@ -1,0 +1,1 @@
+Images folder used for all sites

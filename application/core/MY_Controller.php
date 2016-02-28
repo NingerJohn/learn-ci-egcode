@@ -1,9 +1,12 @@
 <?php
 
 /**
-* 对CI_Controller控制器进行扩展
-* 基本的变量设置，常用方法的声明
-*
+* 网站最高级的父类控制器， 对CI_Controller控制器进行扩展
+* 1. 基本的变量设置
+* 网站名字，
+* 2. 常用方法的声明
+* 简化get，post获取方式的方法
+* 
 *
 * 
 */
@@ -15,7 +18,7 @@ class MY_Controller extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->web_title = 'CI学习例子代码';
+		$this->web_title = 'CI学习例子代码'; // 网站名字，与每个网页的名字不一样
 	}
 
 	/**

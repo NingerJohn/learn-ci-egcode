@@ -1,7 +1,7 @@
 <?php
 
 /**
-* 用户控制器父类，基于MY_Controller
+* 用户中心控制器父类，继承自网站基类MY_Controller
 * 
 * @author NJ
 * @ctime 2016年01月24日08:45:52

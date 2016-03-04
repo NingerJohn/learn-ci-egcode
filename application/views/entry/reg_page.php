@@ -48,14 +48,21 @@ $('input.register-submit').click(function(){
 		layer.msg('密码不一致，请确认输入');
 		return false;
 	};
-	console.log('test');
+	// layer.msg('test');
+	// alert('test');
+	// console.log('test');
 	// 获取表单所有的数据
 	var submitData = $('form.register-form').serialize();
-	var result = common.ajaxRequest(submitUrl, submitData);
 	var submitUrl = '<?php echo site_url('entry/register_submit'); ?>'; // ajax提交用户数据到处理注册的url地址
+	var result = common.ajaxRequest(submitUrl, submitData);
+	// console.log(submitData);
+	// console.log(result);
 	if (result.status==1) {
 		// 注册成功
 		layer.msg(result.msg);
+		setTimeout(function(){
+			window.location.href= "<?php echo site_url('entry/login'); ?>";
+		},1500);
 		return false;
 	} else {
 		// 注册失败

@@ -67,6 +67,7 @@ class User_m extends CI_Model
 	{
 		# code...
 		$query = $this->db->select('*')->from(self::$table_name)->where($cond)->get();
+		var_dump($query->row());exit;
 		return $query->row(); // 直接返回用户数据，因为返回到控制器时需要存到session里面
 		$result = $query->num_rows(); // 如果根据邮箱和密码查询到的条数
 		return $result;

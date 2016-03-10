@@ -15,7 +15,6 @@ class Entry extends MY_Controller {
 	public function index()
 	{
 		$this->load->view('entry/index');
-		
 	}
 
 	/**
@@ -47,24 +46,27 @@ class Entry extends MY_Controller {
 	{
 		// 下面的代码可以打印前台页面用户提交过来的数据
 		// var_dump($this->post('email'));exit;
-		$this->load->model('common/User_m', 'user_m'); // 加载用户表模型
-		$cond['email'] = trim($this->post('email')); // 获取用户传递过来的邮箱
+		$this->load->model('common/Temp_user_m', 'tmp_usr_m'); // 加载临时用户表模型
+		$check_cond['email'] = trim($this->post('email')); // 获取用户传递过来的邮箱
+		$check_cond['mail_verified'] = 1; // 邮箱验证状态
 		// 邮箱验证，直接使用的是php5.2版本以后提供的内置函数，如果不放心的话，可以加一个正则匹配
-		if(!filter_var($cond['email'],FILTER_VALIDATE_EMAIL)){
+		if(!filter_var($check_cond['email'],FILTER_VALIDATE_EMAIL)){
 			$fin_res['status'] = 0;
 			$fin_res['msg'] = '邮箱格式不合法';
 			echo json_encode($fin_res);exit;
 		}
-		$mail_check_res = $this->user_m->repeat_check($cond); // 调用用户表模型中的邮箱检重方法
+		$mail_check_res = $this->tmp_usr_m->repeat_check($check_cond); // 调用临时用户表模型中的邮箱检重方法
 		if ($mail_check_res > 0) { // 如果数量大于0的话，则说明已注册
 			$fin_res['status'] = 0;
 			$fin_res['msg'] = '邮箱已经注册';
 			echo json_encode($fin_res);exit;
 		} else {
-			$cond['password'] = md5(trim($this->post('pwd'))); // 获取用户传递过来的邮箱
-			$cond['reg_time'] = time(); // 注册时间
-			$cond['reg_ip_address'] = $_SERVER["REMOTE_ADDR"]; // 注册ip地址
-			$reg_res = $this->user_m->register($cond);
+			$reg_data['email'] = $check_cond['email'];
+			$reg_data['password'] = pwd_encrypt(trim($this->post('pwd')))['password']; // 加密密码
+			$reg_data['salt'] = pwd_encrypt(trim($this->post('pwd')))['salt']; // 加密盐值
+			$cond['register_time'] = time(); // 注册时间
+			$cond['register_ip'] = $_SERVER["REMOTE_ADDR"]; // 注册ip地址
+			$reg_res = $this->tmp_usr_m->register($cond);
 			if ($reg_res==1) { // 注册成功
 				$fin_res['status'] = 1;
 				$fin_res['msg'] = '注册成功';

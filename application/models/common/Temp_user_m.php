@@ -1,22 +1,22 @@
 <?php
 /**
 * 
-* 用户表模型
+* 临时用户表模型
 *
 * 
-* @ctime 2016年01月22日21:21:41
+* @ctime 2016年3月10日18:25:38
 * @author NJ
 * @used
 * 
 */
-class User_m extends CI_Model
+class Temp_user_m extends CI_Model
 {
 	static $table_name;
 	function __construct()
 	{
 		# code...
 		parent::__construct();
-		self::$table_name = 'tt_user';
+		self::$table_name = 'tt_temp_user';
 	}
 
 	/**

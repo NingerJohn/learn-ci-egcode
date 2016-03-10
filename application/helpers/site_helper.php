@@ -14,8 +14,23 @@
 
 // 密码加密函数
 if (function_exists('pwd_encrypt')) {
-	function pwd_encrypt($original_password, $salt){
-		return md5($original_password.$salt).$salt;
+	/**
+	 * 密码处理函数
+	 * @param  string $original_password 初始密码
+	 * @param  string $password          数据库存储的加密密码
+	 * @param  string $salt              盐值
+	 * @return mixed                     返回的结果，加密密码或者对比结果
+	 */
+	function pwd_encrypt($original_password, $password=NULL, $salt=NULL){
+		// $salt为NULL的时候，默认是加密，返回加密密码和盐值
+		if ($password===NULL && $salt===NULL) {
+			$salt = microtime(true);
+			$res['salt'] = $salt;
+			$res['password'] = md5(md5($original_password.$salt)).md5($salt);
+		} else {
+			$res = ( $password === md5(md5($original_password.$salt)).md5($salt) ) ? true : false;
+		}
+		return $res;
 	}
 }
 

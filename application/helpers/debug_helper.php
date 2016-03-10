@@ -23,7 +23,7 @@ if (function_exists('pr')) {
 
 
 // 调试打印函数，终止
-if (function_exists('pr')) {
+if (function_exists('pre')) {
 	function pr($val){
 		echo '<br>';
 		print_r($val);

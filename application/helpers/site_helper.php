@@ -11,9 +11,8 @@
  */
 
 
-
 // 密码加密函数
-if (function_exists('pwd_encrypt')) {
+if (!function_exists('pwd_encrypt')) {
 	/**
 	 * 密码处理函数
 	 * @param  string $original_password 初始密码
@@ -25,25 +24,31 @@ if (function_exists('pwd_encrypt')) {
 		// $salt为NULL的时候，默认是加密，返回加密密码和盐值
 		if ($password===NULL && $salt===NULL) {
 			$salt = microtime(true);
-			$res['salt'] = $salt;
-			$res['password'] = md5(md5($original_password.$salt)).md5($salt);
+			$res['salt'] = md5($salt);
+			$salt_arr = str_split($res['salt']);
+			$tmp_pwd = md5($original_password);
+			$tmp_pwd_arr = str_split($tmp_pwd);
+			$final_pwd = [];
+			foreach ($salt_arr as $k => $v) {
+				$final_pwd[] = $tmp_pwd_arr[$k];
+				$final_pwd[] = $v;
+			}
+			$res['password'] = md5(implode('',$final_pwd));
 		} else {
-			$res = ( $password === md5(md5($original_password.$salt)).md5($salt) ) ? true : false;
+			$salt_arr = str_split($salt);
+			$tmp_pwd = md5($original_password);
+			$tmp_pwd_arr = str_split($tmp_pwd);
+			$final_pwd = [];
+			foreach ($salt_arr as $k => $v) {
+				$final_pwd[] = $tmp_pwd_arr[$k];
+				$final_pwd[] = $v;
+			}
+			$res = ( $password === md5(implode('', $final_pwd)) ) ? true : false;
 		}
 		return $res;
 	}
 }
 
-
-// 调试打印函数，终止
-if (function_exists('pr')) {
-	function pr($val){
-		echo '<br>';
-		print_r($val);
-		echo '<br>';
-		exit('打印输出结束');
-	}
-}
 
 // 
 

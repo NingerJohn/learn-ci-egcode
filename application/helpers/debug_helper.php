@@ -12,30 +12,44 @@
 
 
 
-// 调试打印函数，不终止
-if (function_exists('pr')) {
+// print_r调试打印函数，不终止
+if (!function_exists('pr')) {
 	function pr($val){
-		echo '<br>';
+		echo '<pre>';
 		print_r($val);
-		echo '<br>';
+		echo '</pre>';
 	}
 }
 
 
-// 调试打印函数，终止
-if (function_exists('pre')) {
-	function pr($val){
-		echo '<br>';
+// print_r调试打印函数，终止
+if (!function_exists('pre')) {
+	function pre($val){
+		echo '<pre>';
 		print_r($val);
-		echo '<br>';
+		echo '</pre>';
 		exit('打印输出结束');
 	}
 }
 
-// 
+// var_dump详细打印调试函数
+if (!function_exists('vd')) {
+	function vd($val){
+		echo '<pre>';
+		var_dump($val);
+		echo '</pre>';
+	}
+}
 
-
-
+// var_dump详细打印调试函数
+if (!function_exists('vde')) {
+	function vde($val){
+		echo '<pre>';
+		var_dump($val);
+		echo '</pre>';
+		exit('打印输出结束');
+	}
+}
 
 
 

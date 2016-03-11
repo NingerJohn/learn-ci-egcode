@@ -49,7 +49,13 @@ $front_sess = $this->session->front_sess;
 			<?php else: ?>
 				<li class="">
 					<a href="<?php echo site_url('entry/login') ?>">Sign in</a>
-				</li>	
+				</li>
+				<li class="">
+					<a href="<?php echo site_url('entry/register') ?>">Sign up</a>
+				</li>
+
+
+
 			<?php endif ?>
 		  </ul>
 		</div><!-- /.navbar-collapse -->

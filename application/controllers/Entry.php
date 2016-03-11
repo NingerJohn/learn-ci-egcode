@@ -64,9 +64,9 @@ class Entry extends MY_Controller {
 			$reg_data['email'] = $check_cond['email'];
 			$reg_data['password'] = pwd_encrypt(trim($this->post('pwd')))['password']; // 加密密码
 			$reg_data['salt'] = pwd_encrypt(trim($this->post('pwd')))['salt']; // 加密盐值
-			$cond['register_time'] = time(); // 注册时间
-			$cond['register_ip'] = $_SERVER["REMOTE_ADDR"]; // 注册ip地址
-			$reg_res = $this->tmp_usr_m->register($cond);
+			$reg_data['register_time'] = time(); // 注册时间
+			$reg_data['register_ip'] = $_SERVER["REMOTE_ADDR"]; // 注册ip地址
+			$reg_res = $this->tmp_usr_m->register($reg_data);
 			if ($reg_res==1) { // 注册成功
 				$fin_res['status'] = 1;
 				$fin_res['msg'] = '注册成功';

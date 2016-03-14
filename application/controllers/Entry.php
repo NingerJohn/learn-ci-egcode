@@ -59,6 +59,8 @@ class Entry extends MY_Controller {
 		if ($mail_check_res > 0) { // 如果数量大于0的话，则说明已注册
 			$fin_res['status'] = 0;
 			$fin_res['msg'] = '邮箱已经注册';
+			$res = $this->send_email('1084046180@qq.com');
+			pr($res);
 			echo json_encode($fin_res);exit;
 		} else {
 			$reg_data['email'] = $check_cond['email'];

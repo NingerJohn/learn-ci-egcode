@@ -28,12 +28,13 @@ class Temp_user_m extends CI_Model
 	 * @return int       结果数
 	 * 
 	 */
-	public function repeat_check($cond)
+	public function repeat_check($cond, $needed_field = ['email','mail_verified','register_time'])
 	{
 		# code...
-		$query = $this->db->select('*')->from(self::$table_name)->where($cond)->get();
-		$result = $query->num_rows(); // 查询条数
-		return $result;
+		$query_result = $this->db->select($needed_field)->from(self::$table_name)->where($cond)->get();
+		vde($query_result->row());
+		// $result = $query->num_rows(); // 查询条数
+		return $query_result;
 		// $error = $this->db->error(); // 可以打印错误
 	}
 
@@ -42,14 +43,27 @@ class Temp_user_m extends CI_Model
 	 * 
 	 * @author NJ
 	 * @ctime 2016年1月23日16:21:11
-	 * @param  array $val_arr 插入的数据
+	 * @param  array $reg_data 插入的数据
 	 * @return int          影响的条数（一般都是一条）
 	 * 
 	 */
-	public function register($val_arr)
+	public function register($reg_data)
 	{
-		$result = $this->db->insert(self::$table_name, $val_arr); // 插入数据成功的话为true，失败的话为false
-		return $result;
+		$this->db->where(['email'=>$reg_data['email'], 'mail_verified'=>0,'register_time <'=>(time()-3600*24)]);
+		$email_rows = $this->db->count_all_results(self::$table_name);
+		vde($email_rows);
+		if ($email_rows > 0) {
+			// 邮箱存在的话，则更新
+			$register_res = $this->db->update(self::$table_name, $reg_data);
+			// vd('update');
+		} else {
+			// 邮箱存在的话，则插入
+			$register_res = $this->db->insert(self::$table_name, $reg_data);
+			// vd('insert');
+		}
+		// vde($register_res);
+		// $result = $this->db->replace(self::$table_name, $reg_data); // 插入数据成功的话为true，失败的话为false
+		return $register_res;
 	}
 
 

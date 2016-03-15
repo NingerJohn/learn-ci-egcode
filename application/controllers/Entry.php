@@ -48,38 +48,61 @@ class Entry extends MY_Controller {
 		// var_dump($this->post('email'));exit;
 		$this->load->model('common/Temp_user_m', 'tmp_usr_m'); // 加载临时用户表模型
 		$check_cond['email'] = trim($this->post('email')); // 获取用户传递过来的邮箱
-		$check_cond['mail_verified'] = 1; // 邮箱验证状态
+		// $check_cond['mail_verified'] = 1; // 邮箱已验证
 		// 邮箱验证，直接使用的是php5.2版本以后提供的内置函数，如果不放心的话，可以加一个正则匹配
 		if(!filter_var($check_cond['email'],FILTER_VALIDATE_EMAIL)){
 			$fin_res['status'] = 0;
 			$fin_res['msg'] = '邮箱格式不合法';
 			echo json_encode($fin_res);exit;
 		}
-		$mail_check_res = $this->tmp_usr_m->repeat_check($check_cond); // 调用临时用户表模型中的邮箱检重方法
-		if ($mail_check_res > 0) { // 如果数量大于0的话，则说明已注册
+		$repeat_check_res = $this->tmp_usr_m->repeat_check($check_cond); // 调用临时用户表模型中的邮箱检重方法
+		// 判断邮箱是否注册
+		if ( $repeat_check_res !== null && $repeat_check_res['mail_verified'] === '1') { // 如果数量大于0的话，则说明已注册
 			$fin_res['status'] = 0;
 			$fin_res['msg'] = '邮箱已经注册';
-			$res = $this->send_email('1084046180@qq.com');
-			pr($res);
 			echo json_encode($fin_res);exit;
-		} else {
+		} else if ( $repeat_check_res !== null && $repeat_check_res['mail_verified'] === '0' && $repeat_check_res['register_time'] > (time()-3600*24) ) {
+			// 
+		} else if ( $repeat_check_res !== null && $repeat_check_res['mail_verified'] === '0' && $repeat_check_res['register_time'] < (time()-3600*24) ){
+			// 
 			$reg_data['email'] = $check_cond['email'];
 			$reg_data['password'] = pwd_encrypt(trim($this->post('pwd')))['password']; // 加密密码
 			$reg_data['salt'] = pwd_encrypt(trim($this->post('pwd')))['salt']; // 加密盐值
 			$reg_data['register_time'] = time(); // 注册时间
 			$reg_data['register_ip'] = $_SERVER["REMOTE_ADDR"]; // 注册ip地址
+			// 进行注册入库
 			$reg_res = $this->tmp_usr_m->register($reg_data);
-			if ($reg_res==1) { // 注册成功
-				$fin_res['status'] = 1;
-				$fin_res['msg'] = '注册成功';
-				echo json_encode($fin_res);exit;
-			} else { // 注册失败
+			if ($reg_res) {
+				// 注册成功的话，发送邮件到注册邮箱
+				$res = $this->send_email($reg_data['email']);
+				if ($res) {
+					// 发送邮件成功的话，则最终提示用户注册成功
+					$fin_res['status'] = 1;
+					$fin_res['msg'] = '注册成功';
+					echo json_encode($fin_res);exit;
+				} else {
+					// 发送邮件失败的话，则最终提示用户注册失败
+					$fin_res['status'] = 0;
+					$fin_res['msg'] = '注册失败';
+					echo json_encode($fin_res);exit;
+				}
+			} else {
 				$fin_res['status'] = 0;
 				$fin_res['msg'] = '注册失败';
 				echo json_encode($fin_res);exit;
 			}
+		} else if( $repeat_check_res === null || ( $repeat_check_res['mail_verified'] === '0' && $repeat_check_res['register_time'] < (time()-3600*24) ) ){
+			// 用户不存在，或者上次注册已经超过24小时的情况
+			
 		}
 	}
+
+	public function repeat_check($cond)
+	{
+		// 是否注册检查
+		$res = $this->tmp_usr_m->repeat_check($cond);
+	}
+
 
 	/**
 	 * 登录页面

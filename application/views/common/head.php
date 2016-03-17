@@ -74,7 +74,7 @@ $front_sess = $this->session->front_sess;
 	</div>
 </div>
 
-<body ng-app="App">  
+<!-- <body ng-app="App">  
     <div ng-controller="Ctrl">  
         <table>  
             <tr>  
@@ -96,12 +96,12 @@ $front_sess = $this->session->front_sess;
                 <td>  
                     <span ng-bind="Product.salseman">
                     </span>  
-                     <!-- <input type="text" ng-model="Product.salseman">   -->
+                     <input type="text" ng-model="Product.salseman">  
                 </td>  
             </tr>  
         </table>  
     </div>  
-</body>  
+</body>   -->
 
 
 <script type="text/javascript">

@@ -18,6 +18,10 @@
 					<input name="pwd-cfm" type="password" class="form-control pwd-cfm" placeholder="密码确认">
 				</div>
 				<div class="form-group">
+					<input name="email_captcha" type="text" class="form-control email-captcha" placeholder="请输入邮箱验证码">
+					<input type="button" class="btn btn-info register-submit col-lg-3 col-lg-offset-4" value="注册" id="btn">
+				</div>
+				<div class="form-group">
 					<input type="button" class="btn btn-info register-submit col-lg-3 col-lg-offset-4" value="注册" id="btn">
 				</div>
 			</form>
@@ -48,15 +52,10 @@ $('input.register-submit').click(function(){
 		layer.msg('密码不一致，请确认输入');
 		return false;
 	};
-	// layer.msg('test');
-	// alert('test');
-	// console.log('test');
 	// 获取表单所有的数据
 	var submitData = $('form.register-form').serialize();
 	var submitUrl = '<?php echo site_url('entry/register_submit'); ?>'; // ajax提交用户数据到处理注册的url地址
 	var result = common.ajaxRequest(submitUrl, submitData);
-	// console.log(submitData);
-	// console.log(result);
 	if (result.status==1) {
 		// 注册成功
 		layer.msg(result.msg);

@@ -14,11 +14,21 @@
 
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'smtp.exmail.qq.com';
+
+
+/*$config['smtp_host'] = 'smtp.exmail.qq.com';
 $config['smtp_user'] = 'admin@vfinder.cn';
-$config['smtp_pass'] = "Ninger1486SFS";//填写腾讯邮箱开启POP3/SMTP服务时的授权码，即核对密码正确
+$config['smtp_pass'] = "N6";//填写腾讯邮箱开启POP3/SMTP服务时的授权码，即核对密码正确
 $config['smtp_port'] = 465;
-$config['smtp_crypto'] = 'ssl';
+$config['smtp_crypto'] = 'ssl';*/
+
+$config['smtp_host'] = 'smtp.163.com';
+$config['smtp_user'] = 'ningerjohn@163.com';
+$config['smtp_pass'] = "N6";//填写腾讯邮箱开启POP3/SMTP服务时的授权码，即核对密码正确
+$config['smtp_port'] = 25;
+
+
+
 $config['charset'] = 'utf-8';
 $config['smtp_timeout'] = 100;
 $config['mailtype'] = 'html';

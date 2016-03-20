@@ -4,19 +4,25 @@
 * 用户表模型
 *
 * 
-* @ctime 2016年01月22日21:21:41
 * @author NJ
+* @ctime 2016年01月22日21:21:41
 * @used
 * 
 */
 class User_m extends CI_Model
 {
-	static $table_name;
+	static $table_name='tt_user';
 	function __construct()
 	{
 		# code...
 		parent::__construct();
-		self::$table_name = 'tt_user';
+		// self::$table_name = 'tt_user';
+	}
+
+	public function get_table_name()
+	{
+		# code...
+		return self::$table_name;
 	}
 
 	/**
@@ -28,11 +34,11 @@ class User_m extends CI_Model
 	 * @return int       结果数
 	 * 
 	 */
-	public function repeat_check($cond)
+	public function repeat_check($cond, $needed_field = ['email','register_time'])
 	{
 		# code...
-		$query = $this->db->select('*')->from(self::$table_name)->where($cond)->get();
-		$result = $query->num_rows(); // 查询条数
+		$query = $this->db->select($needed_field)->from(self::$table_name)->where($cond)->get();
+		$result = $query->row_array(); // 查询结果数组
 		return $result;
 		// $error = $this->db->error(); // 可以打印错误
 	}
@@ -42,13 +48,15 @@ class User_m extends CI_Model
 	 * 
 	 * @author NJ
 	 * @ctime 2016年1月23日16:21:11
-	 * @param  array $val_arr 插入的数据
+	 * @param  array $reg_data 插入的用户数据
 	 * @return int          影响的条数（一般都是一条）
 	 * 
 	 */
-	public function register($val_arr)
+	public function register($reg_data)
 	{
-		$result = $this->db->insert(self::$table_name, $val_arr); // 插入数据成功的话为true，失败的话为false
+		// 插入数据成功的话为true，失败的话为false
+		$result = $this->db->insert(self::$table_name, $reg_data);
+		// vde($result);
 		return $result;
 	}
 
@@ -62,15 +70,13 @@ class User_m extends CI_Model
 	 * @return int       结果数
 	 * 
 	 */
-	public function login($cond)
+	public function login($cond, $field=['email','password','salt'])
 	{
 		# code...
-		$query = $this->db->select('*')->from(self::$table_name)->where($cond)->get();
-		var_dump($query->row());exit;
-		return $query->row(); // 直接返回用户数据，因为返回到控制器时需要存到session里面
-		$result = $query->num_rows(); // 如果根据邮箱和密码查询到的条数
+		$query = $this->db->select($field)->from(self::$table_name)->where($cond)->get();
+		$result = $query->row_array();
+		// 直接返回用户数据，因为返回到控制器时需要进行密码验证并存到session里面
 		return $result;
-		// $error = $this->db->error(); // 可以打印错误
 	}
 
 

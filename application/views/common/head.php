@@ -53,9 +53,6 @@ $front_sess = $this->session->front_sess;
 				<li class="">
 					<a href="<?php echo site_url('entry/register') ?>">Sign up</a>
 				</li>
-
-
-
 			<?php endif ?>
 		  </ul>
 		</div><!-- /.navbar-collapse -->
@@ -71,6 +68,9 @@ $front_sess = $this->session->front_sess;
 		<br>
 		<br>
 		<br>
+		<?php if ($front_sess): ?>
+			<?php echo $front_sess['email']; ?>
+		<?php endif ?>
 	</div>
 </div>
 
